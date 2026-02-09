@@ -17,3 +17,9 @@ spring:
 
   application:
     name: pokermon
+
+  security:
+    secret-key: bgn578nv04lig2394tpcgsjag4a83pht3utlhahukwgby382b82obg85y42gb2mc2rf42ofunqiqao
+
+external:
+  pokemon-pictures-url: https://github.com/HybridShivam/Pokemon/blob/master/assets/images

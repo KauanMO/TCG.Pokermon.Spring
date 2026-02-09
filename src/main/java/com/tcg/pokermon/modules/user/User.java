@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -25,8 +27,13 @@ public class User {
 
     private LocalDateTime createdAt;
 
+    private Integer favoritePokemonCode;
+
+    private List<UserRoleEnum> roles;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
+        this.roles = List.of(UserRoleEnum.PLAYER);
     }
 }

@@ -6,9 +6,10 @@ import java.time.LocalDateTime;
 
 public record UserInfoDTO(
         String username,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        Integer favoritePokemonCode
 ) {
     public UserInfoDTO(User u) {
-        this(u.getUsername(), u.getCreatedAt());
+        this(u.getUsername(), u.getCreatedAt(), u.getFavoritePokemonCode());
     }
 }

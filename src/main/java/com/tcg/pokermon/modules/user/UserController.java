@@ -1,31 +1,25 @@
 package com.tcg.pokermon.modules.user;
 
-import com.tcg.pokermon.modules.user.dto.CreateUserDTO;
-import com.tcg.pokermon.modules.user.dto.UserInfoDTO;
-import com.tcg.pokermon.modules.user.service.UserService;
-import jakarta.annotation.security.PermitAll;
-import jakarta.validation.Valid;
+import com.tcg.pokermon.modules.auth.service.interfaces.IAuthService;
+import com.tcg.pokermon.modules.user.dto.*;
+import com.tcg.pokermon.modules.user.service.interfaces.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Objects;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("u")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService service;
+    private final IUserService service;
+    private final IAuthService authService;
 
-    @PostMapping
-    public ResponseEntity<UserInfoDTO> register(@RequestBody @Valid CreateUserDTO dto) {
-        User newUser = Objects.requireNonNull(service.create(dto));
+    @PatchMapping
+    public ResponseEntity<UserInfoDTO> patchUserInfo(@RequestBody PatchUserDTO dto) {
+        service.patch(authService.getUserId(), dto);
 
         return ResponseEntity
                 .ok()
-                .body(new UserInfoDTO(newUser));
+                .build();
     }
 }
