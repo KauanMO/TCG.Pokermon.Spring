@@ -39,4 +39,11 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .body(new ErrorDTO(ex.getMessage()));
     }
+
+    @ExceptionHandler(NotAllowedException.class)
+    public ResponseEntity<Object> handleNotAllowedException(NotAllowedException ex) {
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(new ErrorDTO(ex.getMessage()));
+    }
 }

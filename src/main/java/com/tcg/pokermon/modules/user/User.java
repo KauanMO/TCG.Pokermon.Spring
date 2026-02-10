@@ -31,9 +31,12 @@ public class User {
 
     private List<UserRoleEnum> roles;
 
+    private Double balance;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
         this.roles = List.of(UserRoleEnum.PLAYER);
+        this.balance = 30.0;
     }
 }

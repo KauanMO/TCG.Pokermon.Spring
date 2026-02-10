@@ -1,11 +1,13 @@
 package com.tcg.pokermon.modules.user.service;
 
+import com.tcg.pokermon.modules.auth.service.interfaces.IAuthService;
 import com.tcg.pokermon.modules.user.User;
 import com.tcg.pokermon.modules.user.UserRepository;
 import com.tcg.pokermon.modules.user.dto.CreateUserDTO;
 import com.tcg.pokermon.modules.user.dto.PatchUserDTO;
 import com.tcg.pokermon.modules.user.service.interfaces.IUserService;
 import com.tcg.pokermon.shared.client.PokemonPicturesRestClient;
+import com.tcg.pokermon.shared.exception.NotAllowedException;
 import com.tcg.pokermon.shared.exception.PokemonPictureNotFoundException;
 import com.tcg.pokermon.shared.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
