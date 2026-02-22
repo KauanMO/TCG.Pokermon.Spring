@@ -26,8 +26,8 @@ public class GlobalExceptionHandler {
                 .body(new ErrorDTO(errors));
     }
 
-    @ExceptionHandler(PokemonPictureNotFoundException.class)
-    public ResponseEntity<Object> handlePokemonPictureNotFoundException(PokemonPictureNotFoundException ex) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(new ErrorDTO(ex.getMessage()));
