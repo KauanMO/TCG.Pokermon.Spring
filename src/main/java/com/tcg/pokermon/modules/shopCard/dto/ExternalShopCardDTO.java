@@ -24,6 +24,9 @@ public class ExternalShopCardDTO {
     @CsvBindByName(column = "marketPrice")
     Double avgPrice;
 
+    @CsvBindByName(column = "midPrice")
+    Double midPrice;
+
     @CsvBindByName(column = "extRarity")
     String rarity;
 

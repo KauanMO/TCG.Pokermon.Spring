@@ -1,5 +1,6 @@
 package com.tcg.pokermon.modules.shopCard;
 
+import com.tcg.pokermon.modules.cardSet.CardSet;
 import com.tcg.pokermon.modules.cardSet.enums.CardRarityEnum;
 import com.tcg.pokermon.modules.cardSet.enums.CardStageEnum;
 import com.tcg.pokermon.modules.cardSet.enums.CardTypeEnum;
@@ -32,4 +33,7 @@ public class ShopCard {
     private List<CardTypeEnum> types;
 
     private CardStageEnum stage;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private CardSet cardset;
 }

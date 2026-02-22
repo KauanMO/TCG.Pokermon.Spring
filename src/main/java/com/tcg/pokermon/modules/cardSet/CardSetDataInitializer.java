@@ -2,6 +2,7 @@ package com.tcg.pokermon.modules.cardSet;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.tcg.pokermon.modules.shopCard.ShopCard;
 import com.tcg.pokermon.modules.shopCard.dto.ExternalShopCardDTO;
 import com.tcg.pokermon.modules.cardSet.dto.CreateCardSetDTO;
 import com.tcg.pokermon.modules.cardSet.service.interfaces.ICardSetService;
@@ -39,12 +40,9 @@ public class CardSetDataInitializer implements CommandLineRunner {
             if (cardSetService.findByExternalId(externalCardSetId).isEmpty()) {
                 CardSet newCardSet = cardSetService.create(new CreateCardSetDTO(cardSetName, externalCardSetId));
 
-                System.out.println("Cardset created with id: "
-                        + newCardSet.getId()
-                        + " and name: "
-                        + newCardSet.getName());
+                List<ShopCard> shopCards = shopCardService.createAll(externalCards, newCardSet);
 
-                shopCardService.createAll(externalCards);
+                cardSetService.primaryUpdateCardSet(externalCardSetId, shopCards);
             }
         }
     }

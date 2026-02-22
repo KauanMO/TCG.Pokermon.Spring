@@ -1,5 +1,6 @@
 package com.tcg.pokermon.modules.shopCard.service;
 
+import com.tcg.pokermon.modules.cardSet.CardSet;
 import com.tcg.pokermon.modules.cardSet.enums.CardTypeEnum;
 import com.tcg.pokermon.modules.shopCard.ShopCard;
 import com.tcg.pokermon.modules.shopCard.ShopCardRepository;
@@ -18,7 +19,7 @@ public class ShopCardService implements IShopCardService {
     private final ShopCardRepository repository;
 
     @Override
-    public List<ShopCard> createAll(List<ExternalShopCardDTO> dtos) {
+    public List<ShopCard> createAll(List<ExternalShopCardDTO> dtos, CardSet cardSet) {
         List<ShopCard> newShopCards = new ArrayList<>();
 
         for (ExternalShopCardDTO dto : dtos) {
@@ -37,7 +38,8 @@ public class ShopCardService implements IShopCardService {
                             .types(cardTypes)
                             .rarity(CardEnumsUtils.getRarityByDisplayName(dto.getRarity()))
                             .stage(CardEnumsUtils.getStageByDisplayName(dto.getStage()))
-                            .avgPrice(dto.getAvgPrice())
+                            .avgPrice(dto.getAvgPrice() == null ? dto.getMidPrice() : dto.getAvgPrice())
+                            .cardset(cardSet)
                             .build()
             );
         }
