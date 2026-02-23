@@ -1,9 +1,10 @@
 package com.tcg.pokermon.modules.shopCard;
 
+import com.tcg.pokermon.modules.card.Card;
 import com.tcg.pokermon.modules.cardSet.CardSet;
-import com.tcg.pokermon.modules.cardSet.enums.CardRarityEnum;
-import com.tcg.pokermon.modules.cardSet.enums.CardStageEnum;
-import com.tcg.pokermon.modules.cardSet.enums.CardTypeEnum;
+import com.tcg.pokermon.modules.shopCard.enums.CardRarityEnum;
+import com.tcg.pokermon.modules.shopCard.enums.CardStageEnum;
+import com.tcg.pokermon.modules.shopCard.enums.CardTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,4 +37,7 @@ public class ShopCard {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private CardSet cardset;
+
+    @OneToMany(mappedBy = "shopCard")
+    private List<Card> cards;
 }

@@ -1,11 +1,13 @@
 package com.tcg.pokermon.modules.shopCard.service;
 
 import com.tcg.pokermon.modules.cardSet.CardSet;
-import com.tcg.pokermon.modules.cardSet.enums.CardTypeEnum;
+import com.tcg.pokermon.modules.shopCard.enums.CardTypeEnum;
 import com.tcg.pokermon.modules.shopCard.ShopCard;
 import com.tcg.pokermon.modules.shopCard.ShopCardRepository;
 import com.tcg.pokermon.modules.shopCard.dto.ExternalShopCardDTO;
 import com.tcg.pokermon.modules.shopCard.service.interfaces.IShopCardService;
+import com.tcg.pokermon.shared.enums.ResourceEnum;
+import com.tcg.pokermon.shared.exception.ResourceNotFoundException;
 import com.tcg.pokermon.shared.util.CardEnumsUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -45,6 +47,17 @@ public class ShopCardService implements IShopCardService {
         }
 
         return repository.saveAll(newShopCards);
+    }
+
+    @Override
+    public List<ShopCard> findByCardSetId(Long cardSetId) {
+        return repository.findByCardsetId(cardSetId);
+    }
+
+    @Override
+    public ShopCard findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ResourceEnum.SHOPCARD, id));
     }
 
     private Boolean isExternalCardValid(ExternalShopCardDTO dto) {

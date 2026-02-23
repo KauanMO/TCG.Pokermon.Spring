@@ -22,16 +22,8 @@ public class CardSetService implements ICardSetService {
     private final CardSetRepository repository;
 
     @Override
-    public Optional<CardSet> findByExternalId(Long externalId) {
-        return repository.findById(externalId);
-    }
-
-    @Override
-    public void updateCardSetPrice(Long id, Double price) {
-        var cardSet = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ResourceEnum.CARDSET, id));
-
-        cardSet.setPrice(price);
-        repository.save(cardSet);
+    public Optional<CardSet> findById(Long id) {
+        return repository.findById(id);
     }
 
     @Override

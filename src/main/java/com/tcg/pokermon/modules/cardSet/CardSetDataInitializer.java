@@ -37,7 +37,7 @@ public class CardSetDataInitializer implements CommandLineRunner {
 
             Long externalCardSetId = externalCards.getFirst().getExternalCardSetId();
 
-            if (cardSetService.findByExternalId(externalCardSetId).isEmpty()) {
+            if (cardSetService.findById(externalCardSetId).isEmpty()) {
                 CardSet newCardSet = cardSetService.create(new CreateCardSetDTO(cardSetName, externalCardSetId));
 
                 List<ShopCard> shopCards = shopCardService.createAll(externalCards, newCardSet);

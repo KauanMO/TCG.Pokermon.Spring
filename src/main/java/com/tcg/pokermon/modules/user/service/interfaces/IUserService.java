@@ -13,4 +13,6 @@ public interface IUserService extends ICreateService<User, CreateUserDTO>,
     void updateFavoritePokemon(Long userId, Integer favoritePokemonCode);
 
     User findUserByUsername(String username);
+
+    void updateBalance(Long userId, Double balance);
 }

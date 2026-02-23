@@ -1,14 +1,16 @@
 package com.tcg.pokermon.shared.util;
 
-import com.tcg.pokermon.modules.cardSet.enums.CardRarityEnum;
-import com.tcg.pokermon.modules.cardSet.enums.CardStageEnum;
+import com.tcg.pokermon.modules.shopCard.enums.CardRarityEnum;
+import com.tcg.pokermon.modules.shopCard.enums.CardStageEnum;
+
+import java.util.Arrays;
 
 public class CardEnumsUtils {
     public static CardRarityEnum getRarityByDisplayName(String displayName) {
         String normalized = displayName.trim();
 
         for (CardRarityEnum r : CardRarityEnum.values()) {
-            if (r.getDisplayName().equalsIgnoreCase(normalized)) {
+            if (Arrays.asList(r.getDisplayName().split("/")).contains(normalized)) {
                 return r;
             }
         }

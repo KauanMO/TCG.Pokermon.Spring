@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +45,26 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleNotAllowedException(NotAllowedException ex) {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
+                .body(new ErrorDTO(ex.getMessage()));
+    }
+
+    @ExceptionHandler(NotEnoughBalanceException.class)
+    public ResponseEntity<Object> handleNotEnoughBalanceException(NotEnoughBalanceException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorDTO(ex.getMessage()));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleException(Exception ex) {
+        System.out.println(ex.getMessage());
+
+        for(StackTraceElement ste : ex.getStackTrace()) {
+            System.out.println(ste.toString());
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorDTO(ex.getMessage()));
     }
 }

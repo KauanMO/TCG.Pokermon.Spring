@@ -56,4 +56,13 @@ public class UserService implements IUserService {
     public User findUserByUsername(String username) {
         return repository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
     }
+
+    @Override
+    public void updateBalance(Long userId, Double balance) {
+        User userFound = this.findById(userId);
+
+        userFound.setBalance(balance);
+
+        repository.save(userFound);
+    }
 }

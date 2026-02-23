@@ -1,4 +1,4 @@
-package com.tcg.pokermon.modules.cardSet.enums;
+package com.tcg.pokermon.modules.shopCard.enums;
 
 public enum CardTypeEnum {
     WATER,
