@@ -3,6 +3,7 @@ package com.tcg.pokermon.modules.card.service;
 import com.tcg.pokermon.modules.card.Card;
 import com.tcg.pokermon.modules.card.CardRepository;
 import com.tcg.pokermon.modules.card.dto.CardInfoDTO;
+import com.tcg.pokermon.modules.card.dto.CardPageDTO;
 import com.tcg.pokermon.modules.card.dto.CreateCardDTO;
 import com.tcg.pokermon.modules.card.service.interfaces.ICardService;
 import com.tcg.pokermon.modules.cardSet.CardSet;
@@ -14,8 +15,10 @@ import com.tcg.pokermon.modules.user.service.interfaces.IUserService;
 import com.tcg.pokermon.shared.enums.ResourceEnum;
 import com.tcg.pokermon.shared.exception.NotEnoughBalanceException;
 import com.tcg.pokermon.shared.exception.ResourceNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,8 +33,6 @@ public class CardService implements ICardService {
     private final IUserService userService;
     private final IShopCardService shopCardService;
     private final ICardSetService cardSetService;
-
-    private final int CARD_AMOUNT_PER_CARDSET = 6;
 
     @Override
     public Card create(CreateCardDTO dto) {
@@ -84,6 +85,22 @@ public class CardService implements ICardService {
                 .toList();
     }
 
+    @Override
+    public CardPageDTO findPageByUserId(Long userId, Pageable pageable) {
+        Page<Card> cardsPage = repository.findByUserId(userId, pageable);
+
+        return new CardPageDTO(
+                cardsPage.getTotalPages(),
+                cardsPage.getTotalElements(),
+                pageable.getPageNumber(),
+                cardsPage.getContent().size(),
+                cardsPage
+                        .getContent().stream()
+                        .map(CardInfoDTO::new)
+                        .toList()
+        );
+    }
+
     private List<ShopCard> openCardSet(List<ShopCard> possibleCards) {
         List<ShopCard> cardsObtained = new ArrayList<>();
 
@@ -91,6 +108,8 @@ public class CardService implements ICardService {
                 .stream()
                 .mapToInt(c -> c.getRarity().getWeight())
                 .sum();
+
+        int CARD_AMOUNT_PER_CARDSET = 6;
 
         for (int i = 0; i < CARD_AMOUNT_PER_CARDSET; i++) {
             int random = new Random().nextInt(totalWeight);

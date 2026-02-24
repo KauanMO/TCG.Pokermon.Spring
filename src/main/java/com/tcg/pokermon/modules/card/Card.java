@@ -35,7 +35,7 @@ public class Card {
     @PrePersist
     public void calculatePrice() {
         if (shopCard != null && shopCard.getAvgPrice() != null && quality != null) {
-            this.price = (shopCard.getAvgPrice() * 2) * quality;
+            this.price = Double.valueOf(String.format("%.2f", (shopCard.getAvgPrice() * 2) * quality));
         }
     }
 }
